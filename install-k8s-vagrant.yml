@@ -1,0 +1,36 @@
+- hosts: k8s
+  become: yes
+  tasks:
+   - name: install vagrant
+     apt: 
+       name: vagrant 
+       state: present
+
+   - name: create vagrant directory
+     file:
+       path: /home/etang/vagrant/kubernetes-setup
+       state: directory
+       owner: etang
+       group: etang
+       recurse: yes
+
+   - name: copy vagrantfile
+     copy:
+       src: /home/etang/ansible/Vagrantfile
+       dest: /home/etang/vagrant/Vagrantfile
+       owner: etang
+       group: etang
+
+   - name: copy k8s vragrant ansible files
+     copy:
+       src: /home/etang/ansible/kubernetes-setup/master-playbook.yml
+       dest: /home/etang/vagrant/kubernetes-setup/master-playbook.yml
+       owner: etang
+       group: etang
+
+   - name: copy k8s node ansible file
+     copy:
+       src: /home/etang/ansible/kubernetes-setup/node-playbook.yml
+       dest: /home/etang/vagrant/kubernetes-setup/node-playbook.yml
+       owner: etang
+       group: etang
